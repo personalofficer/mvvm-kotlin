@@ -3,6 +3,7 @@ package com.example.heykt.ui.main.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.heykt.data.repo.MainRepository
+import com.example.heykt.retrofit.modal.request.UserRequestModel
 import com.example.heykt.utils.Resource
 import kotlinx.coroutines.Dispatchers
 
@@ -39,6 +40,15 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
         emit(Resource.loading(data = null))
         try {
             emit(Resource.success(data = mainRepository.getCommentByPostId(id)))
+        } catch (exception: Exception) {
+            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
+        }
+    }
+
+    fun getPostAPost(userRequestModel: UserRequestModel) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(Resource.success(data = mainRepository.getPostAPost(userRequestModel)))
         } catch (exception: Exception) {
             emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
         }

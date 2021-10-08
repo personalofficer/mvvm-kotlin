@@ -2,9 +2,8 @@ package com.example.heykt.retrofit
 
 import com.example.heykt.data.model.CommentsDataModel
 import com.example.heykt.data.model.User
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import com.example.heykt.retrofit.modal.request.UserRequestModel
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -19,5 +18,8 @@ interface ApiService {
 
     @GET("comments")
     suspend fun getCommentByPostId(@Query( "postId") id:Int): List<User>
+
+    @POST("posts")
+    suspend fun getPostAPost(@Body userRequestModel: UserRequestModel): User
 
 }

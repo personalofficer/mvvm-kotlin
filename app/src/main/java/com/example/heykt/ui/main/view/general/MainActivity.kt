@@ -14,6 +14,7 @@ import com.example.heykt.data.model.CommentsDataModel
 import com.example.heykt.data.model.User
 import com.example.heykt.retrofit.ApiHelper
 import com.example.heykt.retrofit.RetrofitBuilder
+import com.example.heykt.retrofit.modal.request.UserRequestModel
 import com.example.heykt.ui.main.adapter.MainAdapter
 import com.example.heykt.ui.main.viewmodel.MainViewModel
 import com.example.heykt.ui.main.viewmodel.ViewModelFactory
@@ -53,7 +54,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        viewModel.getCommentByPostId(1).observe(this, Observer {
+
+        val userRequestModel = UserRequestModel()
+        userRequestModel.id=1
+        userRequestModel.body="Body"
+        userRequestModel.title="Title"
+        userRequestModel.userId=2
+
+        viewModel.getPostAPost(userRequestModel).observe(this, Observer {
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
@@ -77,14 +85,14 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun retrieveList(users: List<User>) {
+    private fun retrieveList(users: User) {
 
-        adapter.apply {
-            addUsers(users)
-            notifyDataSetChanged()
-        }
+//        adapter.apply {
+//            addUsers(users)
+//            notifyDataSetChanged()
+//        }
 
-    //Toast.makeText(this,""+users.userEmail,Toast.LENGTH_LONG).show()
+    Toast.makeText(this,""+users.userId,Toast.LENGTH_LONG).show()
 
     }
 }
